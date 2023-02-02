@@ -1,0 +1,496 @@
+\documentclass[11pt]{article}
+
+%% Packages
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{multirow,booktabs}
+\usepackage[table]{xcolor}
+\usepackage{fullpage}
+\usepackage{lastpage}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{wrapfig}
+\usepackage{setspace}
+\usepackage{calc}
+\usepackage{multicol}
+\usepackage{cancel}
+\usepackage[retainorgcmds]{IEEEtrantools}
+\usepackage[margin=3cm]{geometry}
+\usepackage{amsmath}
+\usepackage{empheq}
+\usepackage{framed}
+\usepackage[most]{tcolorbox}
+\usepackage{xcolor}
+\usepackage{proof}
+\usepackage{mathabx}
+
+%% Pagestyle
+\newlength{\tabcont}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+\colorlet{shadecolor}{orange!15}
+\parindent 0in
+\parskip 12pt
+\geometry{margin=1in, headsep=0.25in}
+\theoremstyle{definition}
+\newtheorem{defn}{Definição}
+\newtheorem{exer}{Exercício}
+\newtheorem{note}{Nota}
+\newtheorem{theorem}{Teorema}
+\newtheorem{corollary}{Corolário}
+\newtheorem{lemma}{Lema}
+
+%% NewCommands
+\newcommand{\sse}{\leftrightarrow}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\mf}[1]{\mathfrak{#1}}
+\newcommand{\msf}[1]{\mathsf{#1}}
+\newcommand{\mbb}[1]{\mathbb{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+
+%% Document
+
+\begin{document}
+\setcounter{section}{0}
+\thispagestyle{empty}
+
+\begin{center}
+{\LARGE \bf Provas e Exercícios}\\
+{\large Ref. H. D. Ebbnghaus}\\
+Primavera 2022
+\end{center}
+
+\tableofcontents
+
+\section{Sintaxe de Linguagens de Primeira Ordem}
+
+\begin{lemma}
+Se $\mc{A}\preceq\aleph_0$ então $\mc{A}^*\approx\aleph_0$.
+
+\begin{proof}
+Seja $p_n$ o n-ésimo primo, se $\mc{A}^*=\{a_0,a_1,\dots\}$ existe $\alpha:\mc{A}^*\to\mbb{N}$ tq:
+\[
+\alpha(\square)=1;
+\]
+\[
+\alpha(a_{i_0},\dots,a_{i_r}):=p_0^{i_0+1}\cdot\dots\cdot p_r^{i_r+1}.
+\]
+Claramente $\alpha$ é injetiva, portanto $\mc{A}^*\preceq\aleph_0$ e como $\mc{A}^*\succeq\aleph_0$, visto que contém todas as strings possíveis, pelo teorema de Schröder–Bernstein $\mc{A}^*\approx\aleph_0$.
+\end{proof}
+\end{lemma}
+
+\hrule
+
+\begin{exer}
+Utilize o fato de que se $M_0,M_1,\dots\preceq\aleph_0$ então
+\[
+\bigcup_{n\in\mbb{N}}M_n\preceq\aleph_0
+\]
+Para provar o \textbf{Lema 1}.
+\begin{proof}
+Definindo $M_n:=\mc{A}^n$, então $\forall i(M_i\preceq\aleph_0)$, visto que $\kappa\cdot\mu=\msf{\max}\{\kappa,\mu\}$ e $n\in\mbb{N}$, com isso
+\[
+\bigcup_{n\in\mbb{N}}M_n=\mc{A}^*\preceq\aleph_0.
+\]
+Como $\mc{A}^*\succeq\aleph_0$ novamente pelo teorema de Schröder-Bernstein $\mc{A}^*\approx\aleph_0$.
+\end{proof}
+\end{exer}
+
+\hrule
+
+\begin{lemma}
+Se $S\preceq\aleph_0$ então $\mc{T}^\mc{S},\mc{L}^\mc{S}\approx\aleph_0$.
+\begin{proof}
+Se $S\preceq\aleph_0$ então também $\mc{A}_\mc{S}$ e, pelo \textbf{Lema 1} $\mc{A}_\mc{S}^*$ também. Como $\mc{T}^\mc{S},\mc{L}^\mc{S}\subseteq\mc{A}_\mc{S}^*\preceq\aleph_0$ e $\mc{T}^\mc{S}$ contém todas as variáveis assim como $\mc{L}^\mc{S}$ todas as fórmulas da forma $v\equiv v$ então $\mc{T}^\mc{S},\mc{L}^\mc{S}\succeq\aleph_0$, novamente pelo teorema de Schröder-Bernstein $\mc{T}^\mc{S},\mc{L}^\mc{S}\approx\aleph_0$.
+\end{proof}
+\end{lemma}
+
+\hrule
+
+\begin{lemma}
+(a) $\forall t,t'\in\mc{T}^\mc{S}$, $t$ não é um segmento inicial próprio de $t'$ (i.e. $\neg\exists\zeta\ne\square$ tq $t\zeta=t'$);\\
+(b)$\forall\varphi,\varphi'\in\mc{L}^\mc{S}$, $\varphi$ não é um segmento inicial próprio de $\varphi'$.
+
+\begin{proof}
+(a) Seja $P(\eta):=\forall t\in\mc{T}^\mc{S}$ $t$ não é um segmento inicial próprio de $\eta$. Usando indução em termos:\\
+(i) $t=x$: Se $t'$ é um termo arbitrário, como $\msf{len}(t)=1$ precisaríamos que $t'=\square$ para este ser um termo inicial próprio, mas $\square$ não é um termo, visto que ambos (variáveis e constantes) tem $\msf{len}>0$, assim como termos da forma $ft_1\dots t_n$.\\
+(ii) $t=c$: A prova é análoga.\\
+(iii) $t=ft_1\dots t_n$ com $P(t_1),\dots,P(t_n)$: Suponha $t'$ um segmento inicial próprio de $t$, então $\exists\zeta\ne\square$ tq $t=t'\zeta$. Como $t'$ inicia com $f$ então pra ser um termo tem de ser da forma $ft_1'\dots t_n'$, com isso
+\[
+ft_1\dots t_n=ft_1'\dots t_n'\zeta,
+\]
+Cancelando $f$ temos que $t_1'$ é um segmento inicial de $t_1$, mas como $t_1$ goza de $P$, então $t_1=t_1'$, continuando o processo temos que $t_i=t_i',1\le i\le n$, portanto $\zeta=\square$, o que contradiz a hipótese, i.e. $t'$ não é um segmento inicial próprio de $t$.\\\\
+(b) Seja $P(\Psi):=\forall\varphi\in\mc{L}^\mc{S}$ $\varphi$ não é um segmento inicial próprio de $\Psi$. Usando indução em fórmulas assumimos que $\varphi'$ é um segmento inicial próprio de $\varphi$, i.e. $\exists\zeta\ne\square$ tq $\varphi=\varphi'\zeta$.\\
+(i) $\varphi=t_1\equiv t_2$: $\varphi=\varphi'\zeta$ sse $\varphi'$ é da forma $t_1'\equiv t_2'$, portanto
+\[
+t_1\equiv t_2=t_1'\equiv t_2'\zeta.
+\]
+mas $t_1'$ é um segmento inicial próprio de $t_1$, por (a) temos $t_1=t_1'$, repetindo para $t_2$ chegamos em $\zeta=\square$, contradição.\\
+(ii) $\varphi=Rt_1\dots t_n$: $\varphi=\varphi'\zeta$ sse $\varphi'$ for da forma $Rt_1'\dots t_n'$, cancelando $R$ e aplicando (a) em todos $t_i,1\le i\le n$ chegamos em $\zeta=\square$, contradição.\\
+(iii) $\varphi=\neg\psi$ com $*=\wedge,\vee,\to,\sse$, $\psi\in\mc{L}^\mc{S}$ e $P(\psi)$: $\varphi=\varphi'\zeta$ sse $\varphi'$ for da forma $\neg\chi,\chi\in\mc{L}^\mc{S}$. Assim $\psi=\chi\zeta$, portanto $\chi$ é um segmento inicial próprio de $\psi$, o que contrareia a hipótese, então $\psi=\chi$, dessa forma $\zeta=\square$, contradição.\\
+(iv) $\varphi=(\psi*\chi)$ com $\psi,\chi\in\mc{L}^\mc{S}$ e $P(\psi),P(\chi)$: $\varphi=\varphi'\zeta$ sse $\varphi'$ é da forma $(\psi'*'\chi')$
+\[
+(\psi*\chi)=(\psi'*'\chi')\zeta.
+\]
+Por hipótese concluímos que $\psi=\psi'$ e, se $*=*'$, visto que, por hipótese, $\varphi'$ é segmento inicial próprio de $\varphi$. Assim, também por hipótese, $\chi=\chi'$, portanto $\zeta=\square$, contradição.\\
+(v) $\varphi=Qx\psi$ com $Q=\forall,\exists$, $\psi\in\mc{L}^\mc{S}$ e $P(\psi)$: $\varphi=\varphi'\zeta$ sse $\varphi'$ é da forma $Qx'\psi'$, então
+\[
+Qx\psi=Qx'\psi'\zeta.
+\]
+Por (a) temos que $x=x'$ e, por hipótese, concluímos que $\psi=\psi'$, portanto $\zeta=\square$, contradição.
+\end{proof}
+\end{lemma}
+
+\hrule
+
+\begin{lemma}
+(a) Se $t_1,\dots,t_n,t_1',\dots,t_m'\in\mc{T}^\mc{S}$ e $t_1\dots t_n=t_1'\dots t_m'$ então $m=n$ e $t_i=t_i',1\le i\le n$.
+(b) Se $\varphi_1,\dots,\varphi_n,\varphi_1',\dots,\varphi_m'\in\mc{L}^\mc{S}$ e $\varphi_1\dots\varphi_n'=\varphi_1'\dots\varphi_m'$ então $m=n$ e $\varphi_i=\varphi_i',1\le i\le n$.
+
+\begin{proof}
+(a) Se $t_1\dots t_n=t_1'\dots t_m'$ então $t_1'$ é segmento inicial próprio de $t_1$, do \textbf{Lema 3.(a)} concluímos que $t_1=t_1'$, fazendo o mesmo temos que $t_i=t_i',1\le i\le n$. Como ambos os termos são iguais temos que $\msf{len}(t_1\dots t_n)=\msf{len}(t_1'\dots t_m')$ i.e. $n=m$.\\
+(b) Se $\varphi_1\dots\varphi_n'=\varphi_1'\dots\varphi_m'$ então $\varphi_1'$ é segmento inicial próprio de $\varphi_1$, do \textbf{Lema 3.(b)} concluímos que $\varphi_1=\varphi_1'$, fazendo o mesmo temos que $\varphi_i=\varphi_i',1\le i\le n$. Como ambos os termos são iguais temos que $\msf{len}(\varphi_1\dots \varphi_n)=\msf{len}(\varphi_1'\dots \varphi_m')$ i.e. $n=m$.\\
+\end{proof}
+\end{lemma}
+
+\hrule
+
+\begin{exer}
+(a) Seja $\mf{C}_v$ o cálculo consistindo das seguintes regras:
+\[
+\infer[;]{x~~~x}{\phantom{aaaaaaa}} ~~~~\infer[\text{ se }f\in\mc{S}\text{ é n-ária e }i\in\{1,\dots,n\}.]{y~~~ft_1\dots t_n}{y & t_i}
+\]
+Mostre que para toda variável $x$ e $\mc{S}$-termo $t$, $x$ $t$ é derivável em $\mf{C}_v$ sse $x\in\msf{var}(t)$.\\
+(b) Dê um resultado para $\msf{SF}$ análogo ao resultado para $\msf{var}$ em (a).
+
+\begin{proof}
+(a)\\
+(i) Se $x\in\msf{var}(t)$ então $x$ $t$ é derivável em $\mf{C}_v$: Se $t=x$ então $x\in\msf{var}(t)$ e pela 1ª regra $x$ $t$ é derivável. Se $t=t_i$ e $x\in\msf{var}(t_i)$ então, seguindo a definição, $x\in f(t_1\dots t_n)$.\\
+(ii) Se $x$ $t$ é derivável em $\mf{C}_v$ então $x\in\msf{var}(t)$: Se $t=x$ a primeira regra garante que $x\in\msf{var}(t)$. Se $t=ft_1\dots t_n$ então existe um $x$ $t_i$ em $\mf{C}_v$, como todos termos dessa forma que existem partem de uma regra sem premissa (regra 1) então $x\in\msf{var}(t_i)$ logo $x\in\msf{var}(ft_1\dots t_n)$.\\
+(b) Seja o cálculo $\mf{C}_a$ definido pelas regras:
+\[
+\infer[;]{t_m\equiv t_n~~~t_m\equiv t_n}{\phantom{aaaaaaa}} ~~~~\infer[;]{\varphi~~~\neg\psi}{\varphi & \psi}~~~~\infer[*=\wedge,\vee,\to,\sse;]{\varphi~~~(\varphi*\psi)}{\varphi & \psi}~~~~\infer[Q=\forall,\exists.]{\varphi~~~Qx\psi}{\varphi & \psi}
+\]
+Para todo termo $t_m,t_n$ e toda variável $x$. $\varphi$ $\psi$ é derivável em $\mf{C}_a$ sse $\varphi\in\msf{SF}(\psi)$.
+\end{proof}
+\end{exer}
+
+\hrule
+
+\begin{exer}
+Mostre que o cálculo $\mf{C}_{nf}$ permite derivar precisamente aquelas strings da forma $x$ $\varphi$ no qual $\varphi\in\mc{L}^\mc{S}$ tq $x\notin\msf{free}(\varphi)$:\\\\
+\infer[\text{Se }t_1,t_2\in\mc{T}^\mc{S}\text{ e }x\notin\msf{var}(t_1)\cup\msf{var}(t_2);]{x~~~t_1\equiv t_2}{\phantom{aaaaaaa}}\\\\
+\infer[\text{Se }R\in\mc{S}\text{ é n-ária},t_1,\dots,t_n\in\mc{T}^\mc{S}\text{ e }x\notin\bigcup_{n\in\mbb{N}}\msf{var}(t_n);]{x~~~Rt_1\dots t_n}{\phantom{aaaaaaa}}\\\\
+\infer[;]{x~~~\neg\varphi}{x & \varphi}~~~~
+\infer[*=\wedge,\vee,\to,\sse;]{x~~~(\varphi*\psi)}{(x & \varphi) & (x & \psi)}~~~~
+\infer[;]{x~~~Qx\varphi}{\phantom{aaaaaaa}}~~~~
+\infer[Q=\forall,\exists;]{x~~~Qx\varphi}{x & \varphi}
+
+\begin{proof}
+$(\Rightarrow)$ Fazendo indução em cada regra:\\
+$\varphi=t_1\equiv t_2$: por definição $x\notin\msf{free}(\varphi)$;\\
+$\varphi=Rt_1\dots t_n$: Também por definição $x\notin\msf{free}(\varphi)$;\\
+$\varphi=Qx\psi$ nesse caso $x\notin\msf{free}(\varphi)=\msf{free}(\psi)\backslash\{x\}$;\\
+(*) Portanto todas as fórmulas $\varphi$ deriváveis com premissa livre não tem uma ocorrência livre de $x$.\\
+$\varphi=\neg\psi$: Se $\neg\psi$ é derivável, então $\psi$ também é, mas se $\psi$ é derivável em $\mf{C}_{nf}$ então, por (*), $x\notin\msf{free}(\psi)\to x\notin\msf{free}(\neg\psi)$;\\
+$\varphi=(\psi*\chi)$: O argumento é análogo ao de cima, ambos $\psi,\chi$ tem de ser derivável e, por (*), não há ocorrência livre neles, o que implica que não há em $(\psi*\chi)$.\\\\
+$(\Leftarrow)$ Agora assumindo $x\notin\msf{free}(\varphi)$:\\
+$\varphi=t_1\equiv t_2$: então ela é derivável pela regra 1;\\
+$\varphi=Rt_1\dots t_n$: então ela é derivável pela 2ª regra;\\
+$\varphi=Qx\psi$: a última e penúltima regra garantem que é derivável;\\
+$\varphi=\neg\psi$: então $x\notin\msf{free}(\varphi)$, portanto a 3ª regra garante que é derivável;\\
+$\varphi=(\psi*\chi)$: Se $x$ não ocorre livre em $\varphi$ então ela não ocorre livre em ambos, portanto a 5ª regra garante sua derivação.
+\end{proof}
+\end{exer}
+
+\section{Semântica de Linguagens de Primeira Ordem}
+
+\begin{exer}
+Seja $A\ne\varnothing$ e $A,\mc{S}\prec\aleph_0$ um conjunto de símbolos. Mostre que há uma quantidade finita de $\mc{S}$-estruturas com domínio $A$.
+
+\begin{proof}
+Seja $S=((c_i)_{0\le i\le n_1},(R_i)_{0\le i\le n_2},(f_i)_{0\le i\le n_3})$ e $|A|=m$, a quantidade total de associações possíveis pra cada elemento é:
+\begin{align*}
+    \alpha_{R_i} :=\{Z\mid Z\subseteq A^n\}, & ~~~~|\alpha_{R_i}| =\mc{P}(\alpha_{R_i}) = 2^m\\
+    \alpha_{f_i} :=A^{\left(A^n\right)}, & ~~~~|\alpha_{f_i}| = |A|^{|A^n|} = m^{\left(m^n\right)}\\
+    \alpha_{c_i} :=\left(A^n\right)^{A^n}, & ~~~~|\alpha_{c_i}| = |\left(A^n\right)|^{|A^n|} = \left(m^{n\cdot m^n}\right)
+\end{align*}
+Dessa forma, como todos são finitos e a união finita de conjuntos finitos é finita então o total de estruturas $\mc{H}$:
+\[
+\mc{H}:=\bigcup\Biggl\{\bigcup_{0\le i\le n_1}\alpha_{R_i},\bigcup_{0\le i\le n_2}\alpha_{f_i},\bigcup_{0\le i\le n_3}\alpha_{c_i}\Biggr\}\prec\aleph_0.
+\]
+\end{proof}
+\end{exer}
+
+\hrule
+
+\begin{exer}
+Para $\mc{S}$-estruturas $\mf{A}=(A,\mf{a})$ e $\mf{B}=(B,\mf{b})$ seja $\mf{A}\times\mf{B}$ a $\mc{S}$-estrutura com domínio $A\times B$ satisfazendo:\\
+Para $R\in\mc{S}$ n-ária e $(a_1,b_1),\dots,(a_n,b_n)\in A\times B$:
+\[
+R^{\mf{A}\times\mf{B}}(a_1,b_1)\dots(a_n,b_n)\sse R^\mf{A}a_1\dots a_n\wedge R^\mf{B}b_1\dots b_n;
+\]
+Para $f\in\mc{S}$ n-ária e $(a_1,b_1),\dots,(a_n,b_n)\in A\times B$:
+\[
+f^{\mf{A}\times\mf{B}}((a_1,b_1),\dots,(a_n,b_n)):=(f^\mf{A}(a_1,\dots,a_n),f^\mf{B}(b_1,\dots,b_n));
+\]
+Para $c\in\mc{S}$:
+\[
+c^{\mf{A}\times\mf{B}}:=(c^\mf{A},c^\mf{B});
+\]
+Mostre que:\\
+(a) Se as $\mc{S}_{\msf{gr}}$-estruturas $\mf{A}$ e $\mf{B}$ são grupos então $\mf{A}\times\mf{B}$ também é.\\
+(b) Se $\mf{A},\mf{B}$ são estruturas satisfazendo os axiomas de equivalência então $\mf{A}\times\mf{B}$ também satisfaz.\\
+(c) Se as $\mc{S}_{\msf{ar}}$-estruturas $\mf{A},\mf{B}$ são corpos, então $\mf{A}\times\mf{B}$ também é.
+
+\begin{proof}
+(a) Sejam $\mf{A}=(A,\circ,e);\mf{B}=(B,*,\varepsilon)$ e $\mf{A}\times\mf{B}=(A\times B,\circledast,\epsilon)$. Se $a,b,c\in\mf{A};x,y,z\in\mf{B}$ e $u,v,w\in\mf{A}\times\mf{B}$:\\\\
+(i) $\forall u,v,w((u\circledast v)\circledast w = u\circledast(v\circledast w))$:
+\begin{align*}
+    (\overbrace{(x,a)}^u\circledast \overbrace{(y,b)}^v)\circledast \overbrace{(z,c)}^w & = (x\circ y,a*b)\circledast (z,c)\\
+    & = (x\circ y\circ z,a*b*c)\\
+    & = (x,a)\circledast(y\circ z,b*c)\\
+    & = (x,a)\circledast((y,b)\circledast(z,c))\\
+    (u\circledast v)\circledast w & = u\circledast(v\circledast w).
+\end{align*}
+(ii) $\forall u\exists v(u\circledast v)=\epsilon$:
+\begin{align*}
+    (\overbrace{(x,a)}^u\circledast\overbrace{(y,b)}^v) & = \overbrace{(e,\varepsilon)}^\epsilon\\
+    (x\circ y,a*b) & =(e,\varepsilon)\\
+    \forall x\exists y(x\circ y=e)& \wedge \forall a\exists b(a*b=\varepsilon).
+\end{align*}
+(iii)$\exists\epsilon\forall u(u\circledast\epsilon=u)$:
+\begin{align*}
+    (\overbrace{(x,a)}^u\circledast\overbrace{(e,\varepsilon)}^\epsilon) & =\overbrace{(x,a)}^u\\
+    (x\circ e,a\circ\varepsilon) & = (x,a)\\
+    \exists e\forall x(x\circ e=x) & \wedge \exists\varepsilon\forall a(a*\varepsilon=a).
+\end{align*}
+(b) Sejam $\mf{A}=(A,R);\mf{B}=(B,\mc{R}),\mf{A}\times\mf{B}=(A\times B,\mathscr{R})$ com $x,y,z\in\mf{A};a,b,c\in\mf{B};u,v,w\in\mf{A}\times\mf{B}$:\\\\
+(i) $\forall u(u\mathscr{R}u)$:
+\begin{align*}
+    \overbrace{(x,a)}^u\mathscr{R}\overbrace{(x,a)}^u & \sse xRx\wedge a\mc{R}a\\
+    \forall x(xRx) & \wedge \forall a(a\mc{R}a).
+\end{align*}
+(ii) $\forall u,v(u\mathscr{R}v\sse v\mathscr{R}u)$:
+\begin{align*}
+    \overbrace{(x,a)}^u\mathscr{R}\overbrace{(y,b)}^v & \sse \overbrace{(y,b)}^v\mathscr{R}\overbrace{(x,a)}^u\\
+    xRy\wedge a\mc{R}b & \sse yRx\wedge b\mc{R}a\\
+    \forall x,y(xRy\sse yRx) & \wedge \forall a,b(a\mc{R}b\sse b\mc{R}a)
+\end{align*}
+(iii) $\forall u,v,w(u\mathscr{R} v\wedge v\mathscr{R} w\to u\mathscr{R}w)$:
+\begin{align*}
+    \overbrace{(x,a)}^u\mathscr{R}\overbrace{(y,b)}^v\wedge \overbrace{(y,b)}^v\mathscr{R}\overbrace{(z,c)}^w & \to \overbrace{(x,a)}^u\mathscr{R}\overbrace{(z,c)}^w\\
+    (xRy\wedge a\mc{R}b)\wedge(yRz\wedge b\mc{R}c) & \to xRz\wedge a\mc{R}c\\
+    (xRy\wedge yRz)\wedge(a\mc{R}b\wedge b\mc{R}c) & \to xRz\wedge a\mc{R}c\\
+    \forall x,y,z(xRy\wedge yRz\to xRz) & \wedge\forall a,b,c(a\mc{R}b\wedge b\mc{R}c\to a\mc{R}c)
+\end{align*}
+(c) Sejam $\mf{A}=(A,+,\cdot,0,1);\mf{B}=(B,*,\times,\ol{0},\ol{1})$ e $\mf{A}\times\mf{B}=(A\times B,\oplus,\odot,\mathbf{0},\mathbf{1})$ com $x,y\in\mf{A};a,b\in\mf{B}$ e $u,v\in\mf{A}\times\mf{B}$:\\\\
+Um dos axiomas é $\forall(u\ne\mathbf{0})\exists v(u\oplus v=\mathbf{1})$:
+\begin{align*}
+    (x,a)\oplus(y,b) & =(1,\ol{1})\\
+    (x\cdot y,a*b) & = (1,\ol{1})
+\end{align*}
+Se isso é verdade então, em particular, para ou $x=0$ ou $a=\ol{0}$ temos que $(0,b),(x,\ol{0})\ne\mathbf{0}$, logo ambos $0,\ol{0}$ possuiriam invreso, o que é falso.
+\end{proof}
+\end{exer}
+
+\hrule
+
+\begin{lemma}
+Para todo $\Phi$ e $\varphi$
+\[
+\Phi\vDash\varphi\text{ sse não é o caso que }\msf{Sat}(\Phi\cup\{\neg\varphi\}).
+\]
+Em particular, $\varphi$ é válida sse $\neg\varphi$ não é satisfatível.
+
+\begin{proof}
+$\Phi\vDash\varphi$\\
+~~sse~~toda interpretação que é modelo de $\Phi$ também é de $\varphi$\\
+~~sse~~não há uma interpretação que é modelo de $\Phi$, mas não de $\varphi$\\
+~~sse~~não há uma interpretação que é modelo de $\Phi\cup\{\neg\varphi\}$\\
+~~sse~~não é o caso que $\msf{Sat}(\Phi\cup\{\neg\varphi\})$.
+\end{proof}
+\end{lemma}
+
+\hrule
+
+\begin{lemma}
+\textbf{Lema da Coincidência.} Seja $\mf{I}_1=(\mf{A}_1,\beta_1)$ uma $\mc{S}_1$-interpretação e $\mf{I}_2=(\mf{A}_2,\beta_2)$ uma $\mc{S}_2$-interpretação tq $\msf{Dom}(\mf{A}_1)=\msf{Dom}(\mf{A}_2)$, seja $\mc{S}:=\mc{S}_1\cap\mc{S}_2$:\\
+(a) Seja $t$ um $\mc{S}$-termo. Se $\mf{I}_1$ e $\mf{I}_2$ concordam nos $\mc{S}$-símbolos, i.e. $\kappa^\mf{A_1}=\kappa^\mf{A_2}$, e variáveis, i.e. $\beta_1(x)=\beta_2(x)$, que ocorrem em $t$, então $\mf{I}_1(t)=\mf{I}_2(t)$;\\
+(b) Seja $\varphi$ uma $\mc{S}$-fórmula. Se $\mf{I}_1$ e $\mf{I}_2$ concordam nos $\mc{S}$-símbolos e nas variáveis que ocorrem livre em $\varphi$, então $\mf{I}_1\vDash\varphi$ e $\mf{I}_2\vDash\varphi$.
+
+\begin{proof}
+(a) Por indução nos $\mc{S}$-termos.\\
+$t=x$: Por hipótese $\beta_1=\beta_2$ portanto $\mf{I}_1(t)=\beta_1(t)=\beta_2(t)=\mf{I}_2(t)$;\\
+$t=c$: Também por hipótese $\mf{I}_2(t)=c^\mf{A_1}=c^\mf{A_2}=\mf{I}_2(t)$.\\
+$t=ft_1\dots t_n$:
+\begin{align*}
+    \mf{I}_1(ft_1\dots t_n) & = f^\mf{A_1}(\mf{I}_1(t_1),\dots,\mf{I}_1(t_n))\\
+    & = f^\mf{A_2}(\mf{I}_2(t_1),\dots,\mf{I}_2(t_n))\\
+    & = \mf{I}_2(ft_1\dots t_n).
+\end{align*}
+(b) Por indução nas $\mc{S}$-fórmulas.\\
+$\varphi=Rt_1\dots t_n$:
+\begin{align*}
+    \mf{I}_1(Rt_1\dots t_n) & = R^\mf{A_1}\mf{I}_1(t_1)\dots\mf{I}_1(t_n)\\
+    & = R^\mf{A_2}\mf{I}_2(t_1)\dots\mf{I}_2(t_n)\\
+    & = \mf{I}_2(Rt_1\dots t_n).
+\end{align*}
+$\varphi=t_1\equiv t_2$: O argumento é análogo.\\
+$\varphi=\neg\psi$:
+\begin{align*}
+    \mf{I}_1\vDash\neg\psi & \text{ sse não vale }\mf{I}_1\vDash\psi\\
+    & \text{ sse não vale }\mf{I}_2\vDash\psi\\
+    & \text{ sse }\mf{I}_2\vDash\neg\psi.
+\end{align*}
+$\varphi=(\psi\vee\chi)$: O argumento é análogo.\\
+$\varphi=\exists x\psi$:\\
+\begin{align*}
+    \mf{I}_1\vDash\exists x\varphi & \text{ sse existe um }a\in A\text{ tq }\mf{I}_1\frac{a}{x}\vDash\psi\\
+    & \text{ sse existe um }a\in A\text{ tq }\mf{I}_2\frac{a}{x}\vDash\psi\\
+    &\text{ sse }\mf{I}_2\vDash\exists x\varphi.
+\end{align*}
+\end{proof}
+\end{lemma}
+
+\hrule
+
+\begin{corollary}
+$\Phi$ é satisfatível com respeito a $\mc{S}$ sse também é com respeito a $\mc{S}'$.
+\end{corollary}
+
+\begin{proof}
+($\Rightarrow$) Seja $\mf{I}'=(\mf{A}',\beta')$ uma $\mc{S}'$-interpretação tq $\mf{I}'\vDash\Phi$, pelo \textbf{Lema da Coincidência} a $\mc{S}$-interpretação $(\mf{A}'\mid_\mc{S},\beta')$ é um modelo de $\Phi$.\\
+($\Leftarrow$) Se $\mf{I}=(\mf{A},\beta)$ é uma $\mc{S}$-interpretação tq $\mf{I}\vDash\Phi$, então escolhemos $\mf{A}'$ uma $\mc{S}'$-estrutura tq $\mf{A}'\mid_\mc{S}=\mf{A}$. Pelo \textbf{Lema da Coincidência} a $\mc{S}'$-interpretação $(\mf{A}',\beta)$ é modelo de $\Phi$.
+\end{proof}
+
+\hrule
+
+\begin{exer}
+Para fórmulas arbitrárias $\varphi,\psi,\chi$ prove que:\\
+$\vDash(\varphi\to\psi)$ sse $\varphi\vDash\psi$.
+
+\begin{proof}
+\begin{align*}
+    \varphi\vDash\psi & \text{ sse para todo }\mf{I}\text{ se }\mf{I}\vDash\varphi\text{ então }\mf{I}\vDash\psi\\
+& \text{ sse para todo }\mf{I}\vDash(\varphi\to\psi)\\
+& \text{ sse }\vDash(\varphi\to\psi).
+\end{align*}
+\end{proof}
+\end{exer}
+
+\hrule
+
+\begin{exer}
+Mostre que:\\
+(a) $\exists x\forall y\varphi\vDash\forall y\exists x\varphi;$\\
+(b) $\forall y\exists xRxy~\nvDash~\exists x\forall yRxy$.
+
+\begin{proof}
+(a) $\mf{I}\vDash\exists x\forall y\varphi$ sse existe um $a\in A$ tq $\mf{I}\frac{a}{x}\vDash\forall y\varphi$, então em particular existe um $a\in A$ tq $\mf{I}\frac{a}{x}\frac{t}{y}\vDash\varphi$ sendo $t\in A$ um termo genérico qualquer. Assim, devido a escolha arbitrária, concluímos que para todo $t\in A$ existe um $a\in A$ tq $\mf{I}\frac{a}{x}\frac{t}{y}\vDash\varphi\frac{t}{y}$, i.e., $\mf{I}\vDash\forall y\exists x\varphi$.\\
+(b) $\mf{I}\vDash\forall y\exists xRxy$ sse para todo $a\in A$ existe um $t\in A$ tq $\mf{I}\vDash Rta$, mas isso não necessariamente implica que exista um $t$ tq $Rta$ valha para todo $a$.
+\end{proof}
+\end{exer}
+
+\hrule
+
+\begin{exer}
+Sejam $\varphi,\psi$ fórmulas tais que $\varphi\vDash\Dashv\psi$. Seja $\chi'$ obtido de $\chi$ substituindo todas as subfórmulas da forma $\varphi$ por $\psi$. Mostre que para todo $\chi,\chi\vDash\Dashv\chi'$.
+
+\begin{proof}
+Provaremos por indução em fórmulas:\\
+Se $\chi=\varphi$ é atômica então $\mf{I}\vDash\varphi$ sse, por hipótese, $\mf{I}\vDash\chi'=\psi$.\\
+Se $\chi=\neg\varphi$ então $\mf{I}\vDash\chi$ sse não vale $\mf{I}\vDash\varphi$ sse, por hipótese, não vale $\mf{I}\vDash\psi$ sse $\mf{I}\vDash\chi'=\neg\psi$.\\
+Se $\chi=\xi\vee\varphi$ então $\mf{I}\vDash\chi$ sse $\mf{I}\vDash\xi$ ou $\mf{I}\vDash\varphi$ sse, por hipótese, $\mf{I}\vDash\xi$ ou $\mf{I}\vDash\psi$ sse $\mf{I}\vDash\chi'=\xi\vee\psi$.\\
+Se $\chi=\exists x\varphi$ então $\mf{I}\vDash\chi$ sse existe um $a\in A$ tq $\mf{I}\frac{a}{x}\vDash\varphi$ sse, por hipótese, existe um $a\in A$ tq $\mf{I}\frac{a}{x}\vDash\psi$ sse $\mf{I}\vDash\chi'=\exists x\psi$.\\
+Portanto $\chi\vDash\Dashv\chi'$.
+\end{proof}
+\end{exer}
+
+\hrule
+
+\begin{exer}
+$\Phi\vDash\varphi$ em $\mc{S}$ sse $\Phi\vDash\varphi$ em $\mc{S}'$.
+
+\begin{proof}
+$\Phi\vDash\varphi$ sse existe uma $\mc{S}$-interpretação $\mf{I}$ tq sempre que $\mf{I}\vDash\Phi$ temos que $\mf{I}\vDash\varphi$. Entretanto, pelo \textbf{Corolário 2.} $\mf{I}\vDash\Phi$ sse para $\mf{I}'$, uma $\mc{S}'$-interpretação, $\mf{I}'\vDash\Phi$ e, por hipótese, $\mf{I}'\vDash\varphi$.
+\end{proof}
+\end{exer}
+
+\hrule
+
+\begin{exer}
+Um conjunto $\Phi$ de sentenças é dito \textit{independente} se não há um $\varphi\in\Phi$ tq $\Phi\backslash\{\varphi\}\vDash\varphi$. Mostre que os conjuntos $\Phi_\text{gr}$ e $\Phi_\text{eq}$ de axiomas dos grupos e relações de equivalência são independentes.
+
+\begin{proof}
+(a) $\Phi_\text{gr} = \{\underbrace{\forall u,v,w((u\circ v)\circ w=u\circ(v\circ w))}_{\varphi_1},\underbrace{\forall u\exists v(u\circ v=e)}_{\varphi_2},\underbrace{\exists c\forall u(u\circ c=u)}_{\varphi_3}\}$\\
+(i) Assuma $\Phi_\text{gr}\backslash\{\varphi_3\}\vDash\varphi_3$, como $\varphi_3$ dita a existência de um elemento neutro basta tomarmos por exemplo $(\mbb{Z},+)$, mas interpretar $c$ em $\varphi_3$ como um $n\ne0$. Assim $\mf{I}\vDash\Phi_\text{gr}\backslash\{\varphi_3\}$, mas $\mf{I}\nvDash\varphi_3$.\\\\
+(ii) Assuma $\Phi_\text{gr}\backslash\{\varphi_2\}\vDash\varphi_2$, como $\varphi_2$ garante a existência de um inverso, basta tomarmos a estrutura $(\mbb{N},+)$ em $\mf{I}$ que vale $\mf{I}\vDash\Phi_\text{gr}\backslash\{\varphi_2\}$, mas $\mf{I}\nvDash\varphi_2$.\\\\
+(iii) Assuma $\Phi_\text{gr}\backslash\{\varphi_1\}\vDash\varphi_1$, como $\varphi_1$ garante associatividade tomamos o operador $\circ$ como não associativo, por exemplo a estrutura $(\mbb{Z},-)$ em $\mf{I}$ garante que $\mf{I}\vDash\Phi_\text{gr}\backslash\{\varphi_1\}$, mas $\mf{I}\nvDash\varphi_1$.\\\\
+(b) $\Phi_\text{eq} = \{\underbrace{\forall a(aRa)}_{\varphi_1},\underbrace{\forall a,b(aRb\sse bRa)}_{\varphi_2},\underbrace{\forall a,b,c(aRb\wedge bRc\to aRc)}_{\varphi_3}\}$\\
+(i) Para $\Phi_\text{eq}\backslash\{\varphi_3\}$ basta tomar $(\mbb{Z},\cdot,R)$ tq $aRb$ sse $a\cdot b \ge 0$. Assim ambos $\varphi_1,\varphi_2$ são satisfeitos, mas escolhendo $b=0$ em $\varphi_3$ tal relação não é sempre verdade.\\\\
+(ii) Para $\Phi_\text{eq}\backslash\{\varphi_2\}$ basta tomar $(\mbb{N},\ge)$, tal qual não é simétrica.\\\\
+(iii) Para $\Phi_\text{eq}\backslash\{\varphi_1\}$ basta tomar $A=\{a\}$ e $(A,R)$ tq $\forall a\in A(a\cancel{R}a)$.
+\end{proof}
+\end{exer}
+
+\hrule
+
+\begin{lemma}
+\textbf{Lema do Isomorfismo.} Para $\mc{S}$-estruturas isomórficas $\mf{A}$ e $\mf{B}$ e toda $\mc{S}$-sentença $\varphi$:
+\[
+\mf{A}\vDash\varphi\text{ sse }\mf{B}\vDash\varphi.
+\]
+
+\begin{proof}
+Para toda assinatura $\beta$ em $\mf{A}$ associamos a assinatura $\beta^\pi:=\pi\circ\beta$ em $\mf{B}$, e para as interpretações correspondentes $\mf{I}=(\mf{A},\beta)$ e $\mf{I}^\pi=(\mf{B},\beta^\pi)$ mostraremos:\\
+(i) Para todo $\mc{S}$-termo $t$: $\pi(\mf{I}(t))=\mf{I}^\pi(t)$.\\
+(ii) Para toda $\mc{S}$-fórmula $\varphi$: $\mf{I}\vDash\varphi$ sse $\mf{I}^\pi\vDash\varphi$.\\\\
+Ambos os (i) e (ii) são fáceis de se provar por indução em termos e fórmulas, respectivamente. Trataremos dos casos mais simples apenas:\\
+\begin{align*}
+    \mf{I}\vDash t_1\equiv t_2 &\text{ sse }\mf{I}(t_1)=\mf{I}(t_2);\\
+    &\text{ sse }\pi(\mf{I}(t_1))=\pi(\mf{I}(t_2))\text{ já que }\pi\text{ é injetiva};\\
+    &\text{ sse }\mf{I}^\pi(t_1)=\mf{I}^\pi(t_2);\\
+    &\text{ sse }\mf{I}^\pi\vDash t_1\equiv t_2.
+\end{align*}
+\begin{align*}
+    \mf{I}\vDash Rt_1\dots t_n &\text{ sse }R^\mf{A}\mf{I}(t_1)\dots\mf{I}(t_n);\\
+    &\text{ sse }R^\mf{B}\pi(\mf{I}(t_1))\dots\pi(\mf{I}(t_n));\\
+    &\text{ sse }R^\mf{B}\mf{I}^\pi(t_1)\dots\mf{I}^\pi(t_n);\\
+    &\text{ sse }\mf{I}^\pi\vDash Rt_1\dots t_n.
+\end{align*}
+\begin{align*}
+    \mf{I}\vDash\neg\psi &\text{ sse não vale }\mf{I}\vDash\psi;\\
+    &\text{ sse não vale }\mf{I}^\pi\vDash\psi;\\
+    &\text{ sse }\mf{I}^\pi\vDash\neg\psi.
+\end{align*}
+\begin{align*}
+    \mf{I}\vDash\exists x\psi &\text{ sse existe um }a\in\msf{Dom}(\mf{A})\text{ tq }\mf{I}\frac{a}{x}\vDash\psi;\\
+    &\text{ sse existe um }a\in\msf{Dom}(\mf{A})\text{ tq }\qty(\mf{I}\frac{a}{x})^\pi\vDash\psi;\\
+    &\text{ sse existe um }a\in\msf{Dom}(\mf{A})\text{ tq }\mf{I}^\pi\frac{\pi(a)}{x}\vDash\psi;\\
+    &\text{ sse existe um }b\in\msf{Dom}(\mf{A})\text{ tq }\mf{I}\frac{b}{x}\vDash\psi\text{ já que }\pi\text{ é sobrejetivo};\\
+    &\text{ sse }\mf{I}^\pi\vDash\exists x\psi.
+\end{align*}
+\end{proof}
+\end{lemma}
+
+\hrule
+
+\begin{exer}
+Mostre que: (a) A relação $<$ é elementarmente definível em $(\mbb{R},+,\cdot,0)$, i.e., existe uma fórmula $\varphi\in\mc{L}^{\{+,\cdot,0\}}_2$ tq $\forall a,b\in\mbb{R}$:
+\[
+(\mbb{R},+,\cdot,0)\vDash\varphi[a,b]\text{ sse }a<b.
+\]
+(b) A relação $<$ não é elementarmente definível em $(\mbb{R},+,0)$.
+
+\begin{proof}
+(a) Tome $\varphi=\exists c\qty(\neg(c=0)\wedge(b=a+c^2))$, dessa forma $(\mbb{R},+,\cdot,0)\vDash\varphi[a,b]$ sse $a<b$.\\\\
+(b) Seja $\pi:\mf{A}\cong\mf{A}$ um automorfismo em $\mf{A}=(\mbb{R},+,\cdot,0)$ tq $\pi(a) = -a$ que é o $c\in\mbb{R}$ tq $a+c=0$. Para provar que $\pi$ é um automorfismo precisamos:\\
+(i) $\pi$ é uma bijeção;\\
+(ii) $\pi(a+b)=\pi(a)+\pi(b)$;\\
+(iii) $\pi(0)=0$.\\
+Como todos são verficados isso garante que é um automorfismo. Agora vejamos que se existe um $\varphi[a,b]$ tq $\mf{A}\vDash\varphi[a,b]$ sse $a<b$ então como $\pi$ é estritamente decrescente, $\mf{A}\vDash\varphi[\pi(a),\pi(b)]$ sse $a>b$. Sabemos, também, pelo \textbf{Lema do Isomorfismo} que $\mf{A}\vDash\varphi[a,b]$ sse $\mf{A}\vDash\varphi[\pi(a),\pi(b)]$, i.e., $a<b$ sse $b<a$, o que é uma contradição, portanto não existe tal $\varphi[a,b]$ e, com isso, $<$ não é elementarmente definível.
+\end{proof}
+\end{exer}
+
+\end{document}
